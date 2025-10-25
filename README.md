@@ -23,7 +23,7 @@ Number input field with default value support. Extends the standard `number` typ
 - Counters with default values
 
 ### 2. 🎨 ColorSelect
-Select field with color preview. Perfect for Bootstrap color classes or any color-coded options.
+Select field with color preview using Sulu's icon font. Perfect for Bootstrap color classes or any color-coded options.
 
 **Use Cases:**
 - Button colors
@@ -31,12 +31,13 @@ Select field with color preview. Perfect for Bootstrap color classes or any colo
 - Theme color selection
 
 ### 3. 🎚️ SliderRange
-Visual range slider with number input. Configurable min/max/step/default values.
+Visual range slider with configurable display modes. Supports textbox input, floating tooltips, and various label layouts.
 
 **Use Cases:**
 - Banner rotation speeds
 - Opacity/transparency
 - Priority levels
+- Volume controls
 
 ---
 
@@ -63,15 +64,25 @@ return [
 
 ### 3. Register Admin Assets
 
-Add to your `assets/admin/packages.json`:
+Add to your main project's `assets/admin/package.json`:
 
 ```json
 {
-    "sulu-content-types-bundle": "file:../../vendor/manuxi/sulu-content-types-bundle/src/Resources"
+    "dependencies": {
+        "sulu-content-types-bundle": "file:../../vendor/manuxi/sulu-content-types-bundle/src/Resources"
+    }
 }
 ```
 
-### 4. Build Admin Assets
+### 4. Import in Main Project
+
+Add to your main project's `assets/admin/index.js`:
+
+```javascript
+import 'sulu-content-types-bundle';
+```
+
+### 5. Build Admin Assets
 
 ```bash
 cd assets/admin
@@ -79,7 +90,7 @@ npm install
 npm run build
 ```
 
-### 5. Clear Cache
+### 6. Clear Cache
 
 ```bash
 bin/console cache:clear
@@ -113,7 +124,9 @@ bin/console cache:clear
 </div>
 ```
 
-### ColorSelect (with translatable labels)
+### ColorSelect
+
+**Important:** The color is encoded in the value attribute using the format `"key:color"` (e.g., `"primary:#0d6efd"`).
 
 ```xml
 <property name="button_color" type="color_select">
@@ -123,19 +136,23 @@ bin/console cache:clear
     </meta>
     <params>
         <param name="values" type="collection">
-            <param name="primary" value="primary">
+            <param name="primary" value="primary:#0d6efd">
                 <meta>
                     <title lang="en">Primary (Blue)</title>
                     <title lang="de">Primärfarbe (Blau)</title>
                 </meta>
-                <param name="color" value="#0d6efd"/>
             </param>
-            <param name="success" value="success">
+            <param name="secondary" value="secondary:#6c757d">
+                <meta>
+                    <title lang="en">Secondary (Gray)</title>
+                    <title lang="de">Sekundärfarbe (Grau)</title>
+                </meta>
+            </param>
+            <param name="success" value="success:#198754">
                 <meta>
                     <title lang="en">Success (Green)</title>
                     <title lang="de">Erfolg (Grün)</title>
                 </meta>
-                <param name="color" value="#198754"/>
             </param>
         </param>
     </params>
@@ -149,26 +166,47 @@ bin/console cache:clear
 </button>
 ```
 
+The value returned is only the key part (e.g., `"primary"`), not the full `"primary:#0d6efd"` string.
+
 ### SliderRange
 
+The SliderRange supports multiple display modes via the `display_mode` parameter:
+
 ```xml
-<property name="banner_speed" type="slider_range">
+<!-- Classic with textbox (default) -->
+<property name="opacity" type="slider_range">
     <meta>
-        <title lang="en">Banner Rotation Speed (ms)</title>
-        <title lang="de">Banner-Rotationsgeschwindigkeit (ms)</title>
+        <title lang="en">Opacity</title>
+    </meta>
+    <params>
+        <param name="min" value="0"/>
+        <param name="max" value="100"/>
+        <param name="step" value="5"/>
+        <param name="default_value" value="50"/>
+        <param name="display_mode" value="input"/>
+        <param name="show_labels" value="true"/>
+    </params>
+</property>
+
+<!-- Floating tooltip (recommended for narrow columns) -->
+<property name="speed" type="slider_range">
+    <meta>
+        <title lang="en">Speed</title>
     </meta>
     <params>
         <param name="min" value="1000"/>
         <param name="max" value="10000"/>
         <param name="step" value="500"/>
         <param name="default_value" value="5000"/>
+        <param name="display_mode" value="floating"/>
+        <param name="show_labels" value="false"/>
     </params>
 </property>
 ```
 
 **In Twig:**
 ```twig
-<div class="banner-slider" data-speed="{{ content.banner_speed }}">
+<div class="banner-slider" data-speed="{{ content.speed }}">
     <!-- Slider with 5000ms default rotation -->
 </div>
 ```
@@ -191,29 +229,46 @@ bin/console cache:clear
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `values` | collection | Array of color options (named keys allowed) |
-| `values.*` | value attribute | Technical value for this option |
-| `values.*.meta.title` | string | Translatable display name |
-| `values.*.color` | param | Hex color code |
+| `values` | collection | Array of color options |
+| `values.*` | value attribute | Key and color in format `"key:color"` |
+| `values.*.meta.title` | string | Translatable display name (optional) |
+
+**Value Format:** `"key:#hexcolor"` (e.g., `"primary:#0d6efd"`)
 
 **XML Structure:**
 ```xml
 <param name="values" type="collection">
-    <param name="primary" value="primary">
+    <param name="primary" value="primary:#0d6efd">
         <meta><title lang="en">Primary</title></meta>
-        <param name="color" value="#0d6efd"/>
     </param>
 </param>
 ```
 
 ### SliderRange
 
-| Parameter | Type | Description | Example |
-|-----------|------|-------------|---------|
-| `min` | number | Minimum value | `0` |
-| `max` | number | Maximum value | `100` |
-| `step` | number | Step increment | `5` |
-| `default_value` | number | Default value | `50` |
+| Parameter | Type | Description | Default | Example |
+|-----------|------|-------------|---------|---------|
+| `min` | number | Minimum value | `0` | `0` |
+| `max` | number | Maximum value | `100` | `100` |
+| `step` | number | Step increment | `1` | `5` |
+| `default_value` | number | Default value | `min` | `50` |
+| `display_mode` | string | Display mode (see below) | `input` | `floating` |
+| `show_labels` | boolean | Show min/max labels | `true` | `false` |
+
+#### Display Modes
+
+| Mode | Description | Best For |
+|------|-------------|----------|
+| `input` | Textbox next to slider with min/max labels | Full-width layouts, precise input needed |
+| `floating` | Tooltip above thumb, smooth animation | Narrow columns (col-3), clean design |
+| `inline` | Current value between min/max labels | Compact layouts |
+| `below` | Current value centered below slider | Minimal layouts, emphasis on value |
+| `none` | No value display, only slider | Ultra-minimal, visual-only control |
+
+**Recommended Combinations:**
+- 📱 Narrow columns (col-3): `display_mode="floating"` + `show_labels="false"`
+- 📊 Full width: `display_mode="input"` + `show_labels="true"`
+- 🎨 Minimalist: `display_mode="below"` + `show_labels="false"`
 
 ---
 
@@ -230,7 +285,8 @@ SuluContentTypesBundle/
 │       ├── config/services.xml    # Service definitions
 │       ├── js/                    # React components
 │       └── package.json           # JS dependencies
-└── docs/                          # Documentation
+├── docs/                          # Public documentation
+└── docs/dev/                      # Developer-only docs (not published)
 ```
 
 ### Running Tests
@@ -258,7 +314,7 @@ composer cs-fix
 
 The JavaScript components use Flow type annotations (`// @flow`). This is optional for development.
 
-See [docs/PHPSTORM_FLOW_FIX.md](docs/dev/PHPSTORM_FLOW_FIX.md) if you get IDE warnings.
+See [docs/PHPSTORM_FLOW_FIX.md](docs/PHPSTORM_FLOW_FIX.md) if you get IDE warnings.
 
 ---
 
@@ -274,8 +330,8 @@ This bundle is designed with Sulu 3.x compatibility in mind:
 ## Documentation
 
 - [Installation Guide](docs/INSTALLATION.md) - Step-by-step installation
-- [Flow Types](docs/dev/FLOW_TYPES.md) - Understanding Flow type annotations
-- [PhpStorm Fix](docs/dev/PHPSTORM_FLOW_FIX.md) - Fixing IDE warnings
+- [Flow Types](docs/FLOW_TYPES.md) - Understanding Flow type annotations
+- [PhpStorm Fix](docs/PHPSTORM_FLOW_FIX.md) - Fixing IDE warnings
 - [Example Template](docs/example_template.xml) - Complete XML examples
 - [Example Twig](docs/example.html.twig) - Twig usage examples
 

@@ -23,7 +23,7 @@ Nummern-Eingabefeld mit Default-Wert-Unterstützung. Erweitert den Standard `num
 - Zähler mit Standardwerten
 
 ### 2. 🎨 ColorSelect
-Auswahlfeld mit Farbvorschau. Perfekt für Bootstrap-Farbklassen oder beliebige farbcodierte Optionen.
+Auswahlfeld mit Farbvorschau über Sulus Icon-Font. Perfekt für Bootstrap-Farbklassen oder beliebige farbcodierte Optionen.
 
 **Anwendungsfälle:**
 - Button-Farben
@@ -31,12 +31,13 @@ Auswahlfeld mit Farbvorschau. Perfekt für Bootstrap-Farbklassen oder beliebige 
 - Theme-Farbauswahl
 
 ### 3. 🎚️ SliderRange
-Visueller Range-Slider mit Nummern-Eingabe. Konfigurierbare min/max/step/default Werte.
+Visueller Range-Slider mit konfigurierbaren Anzeigemodi. Unterstützt Textbox-Eingabe, schwebende Tooltips und verschiedene Label-Layouts.
 
 **Anwendungsfälle:**
 - Banner-Rotationsgeschwindigkeiten
 - Deckkraft/Transparenz
 - Prioritätsstufen
+- Lautstärkeregler
 
 ---
 
@@ -63,15 +64,25 @@ return [
 
 ### 3. Admin-Assets registrieren
 
-Füge zu `assets/admin/packages.json` hinzu:
+Füge zum Hauptprojekt's `assets/admin/package.json` hinzu:
 
 ```json
 {
-    "sulu-content-types-bundle": "file:../../vendor/manuxi/sulu-content-types-bundle/src/Resources"
+    "dependencies": {
+        "sulu-content-types-bundle": "file:../../vendor/manuxi/sulu-content-types-bundle/src/Resources"
+    }
 }
 ```
 
-### 4. Admin-Assets kompilieren
+### 4. Import im Hauptprojekt
+
+Füge zum Hauptprojekt's `assets/admin/index.js` hinzu:
+
+```javascript
+import 'sulu-content-types-bundle';
+```
+
+### 5. Admin-Assets kompilieren
 
 ```bash
 cd assets/admin
@@ -79,7 +90,7 @@ npm install
 npm run build
 ```
 
-### 5. Cache leeren
+### 6. Cache leeren
 
 ```bash
 bin/console cache:clear
@@ -94,8 +105,8 @@ bin/console cache:clear
 ```xml
 <property name="refresh_interval" type="number_with_default">
     <meta>
-        <title lang="en">Refresh Interval (ms)</title>
         <title lang="de">Aktualisierungsintervall (ms)</title>
+        <title lang="en">Refresh Interval (ms)</title>
     </meta>
     <params>
         <param name="min" value="1000"/>
@@ -109,33 +120,39 @@ bin/console cache:clear
 **In Twig:**
 ```twig
 <div data-refresh="{{ content.refresh_interval }}">
-    <!-- Standard: 5000, wenn nicht gesetzt -->
+    <!-- Standardwert ist 5000, falls nicht gesetzt -->
 </div>
 ```
 
-### ColorSelect (mit übersetzbaren Labels)
+### ColorSelect
+
+**Wichtig:** Die Farbe wird im value-Attribut im Format `"key:farbe"` kodiert (z.B. `"primary:#0d6efd"`).
 
 ```xml
 <property name="button_color" type="color_select">
     <meta>
-        <title lang="en">Button Color</title>
         <title lang="de">Button-Farbe</title>
+        <title lang="en">Button Color</title>
     </meta>
     <params>
         <param name="values" type="collection">
-            <param name="primary" value="primary">
+            <param name="primary" value="primary:#0d6efd">
                 <meta>
-                    <title lang="en">Primary (Blue)</title>
                     <title lang="de">Primärfarbe (Blau)</title>
+                    <title lang="en">Primary (Blue)</title>
                 </meta>
-                <param name="color" value="#0d6efd"/>
             </param>
-            <param name="success" value="success">
+            <param name="secondary" value="secondary:#6c757d">
                 <meta>
-                    <title lang="en">Success (Green)</title>
-                    <title lang="de">Erfolg (Grün)</title>
+                    <title lang="de">Sekundärfarbe (Grau)</title>
+                    <title lang="en">Secondary (Gray)</title>
                 </meta>
-                <param name="color" value="#198754"/>
+            </param>
+            <param name="success" value="success:#198754">
+                <meta>
+                    <title lang="de">Erfolg (Grün)</title>
+                    <title lang="en">Success (Green)</title>
+                </meta>
             </param>
         </param>
     </params>
@@ -149,26 +166,47 @@ bin/console cache:clear
 </button>
 ```
 
+Der zurückgegebene Wert ist nur der Key-Teil (z.B. `"primary"`), nicht der vollständige `"primary:#0d6efd"` String.
+
 ### SliderRange
 
+Der SliderRange unterstützt mehrere Anzeigemodi über den `display_mode` Parameter:
+
 ```xml
-<property name="banner_speed" type="slider_range">
+<!-- Klassisch mit Textbox (Standard) -->
+<property name="opacity" type="slider_range">
     <meta>
-        <title lang="en">Banner Rotation Speed (ms)</title>
-        <title lang="de">Banner-Rotationsgeschwindigkeit (ms)</title>
+        <title lang="de">Deckkraft</title>
+    </meta>
+    <params>
+        <param name="min" value="0"/>
+        <param name="max" value="100"/>
+        <param name="step" value="5"/>
+        <param name="default_value" value="50"/>
+        <param name="display_mode" value="input"/>
+        <param name="show_labels" value="true"/>
+    </params>
+</property>
+
+<!-- Schwebender Tooltip (empfohlen für schmale Spalten) -->
+<property name="speed" type="slider_range">
+    <meta>
+        <title lang="de">Geschwindigkeit</title>
     </meta>
     <params>
         <param name="min" value="1000"/>
         <param name="max" value="10000"/>
         <param name="step" value="500"/>
         <param name="default_value" value="5000"/>
+        <param name="display_mode" value="floating"/>
+        <param name="show_labels" value="false"/>
     </params>
 </property>
 ```
 
 **In Twig:**
 ```twig
-<div class="banner-slider" data-speed="{{ content.banner_speed }}">
+<div class="banner-slider" data-speed="{{ content.speed }}">
     <!-- Slider mit 5000ms Standard-Rotation -->
 </div>
 ```
@@ -184,36 +222,53 @@ bin/console cache:clear
 | `min` | number | Minimalwert | `0` |
 | `max` | number | Maximalwert | `100` |
 | `step` | number | Schrittweite | `1` |
-| `multiple_of` | number | Wert muss Vielfaches von | `5` |
+| `multiple_of` | number | Wert muss Vielfaches von sein | `5` |
 | `default_value` | number | Standardwert | `10` |
 
 ### ColorSelect
 
 | Parameter | Typ | Beschreibung |
 |-----------|-----|--------------|
-| `values` | collection | Array von Farboptionen (benannte Keys erlaubt) |
-| `values.*` | value-Attribut | Technischer Wert für diese Option |
-| `values.*.meta.title` | string | Übersetzbarer Anzeigename |
-| `values.*.color` | param | Hex-Farbcode |
+| `values` | collection | Array von Farboptionen |
+| `values.*` | value attribute | Key und Farbe im Format `"key:farbe"` |
+| `values.*.meta.title` | string | Übersetzbarer Anzeigename (optional) |
+
+**Wert-Format:** `"key:#hexfarbe"` (z.B. `"primary:#0d6efd"`)
 
 **XML-Struktur:**
 ```xml
 <param name="values" type="collection">
-    <param name="primary" value="primary">
-        <meta><title lang="de">Primärfarbe</title></meta>
-        <param name="color" value="#0d6efd"/>
+    <param name="primary" value="primary:#0d6efd">
+        <meta><title lang="de">Primär</title></meta>
     </param>
 </param>
 ```
 
 ### SliderRange
 
-| Parameter | Typ | Beschreibung | Beispiel |
-|-----------|-----|--------------|----------|
-| `min` | number | Minimalwert | `0` |
-| `max` | number | Maximalwert | `100` |
-| `step` | number | Schrittweite | `5` |
-| `default_value` | number | Standardwert | `50` |
+| Parameter | Typ | Beschreibung | Standard | Beispiel |
+|-----------|-----|--------------|----------|----------|
+| `min` | number | Minimalwert | `0` | `0` |
+| `max` | number | Maximalwert | `100` | `100` |
+| `step` | number | Schrittweite | `1` | `5` |
+| `default_value` | number | Standardwert | `min` | `50` |
+| `display_mode` | string | Anzeigemodus (siehe unten) | `input` | `floating` |
+| `show_labels` | boolean | Min/Max Labels anzeigen | `true` | `false` |
+
+#### Anzeigemodi
+
+| Modus | Beschreibung | Am besten für |
+|-------|--------------|---------------|
+| `input` | Textbox neben Slider mit min/max Labels | Volle Breite, präzise Eingabe erforderlich |
+| `floating` | Tooltip über dem Anfasser, sanfte Animation | Schmale Spalten (col-3), cleanes Design |
+| `inline` | Aktueller Wert zwischen min/max Labels | Kompakte Layouts |
+| `below` | Aktueller Wert zentriert unter Slider | Minimalistische Layouts, Betonung auf Wert |
+| `none` | Keine Wertanzeige, nur Slider | Ultra-minimal, nur visuelle Kontrolle |
+
+**Empfohlene Kombinationen:**
+- 📱 Schmale Spalten (col-3): `display_mode="floating"` + `show_labels="false"`
+- 📊 Volle Breite: `display_mode="input"` + `show_labels="true"`
+- 🎨 Minimalistisch: `display_mode="below"` + `show_labels="false"`
 
 ---
 
@@ -230,7 +285,8 @@ SuluContentTypesBundle/
 │       ├── config/services.xml    # Service-Definitionen
 │       ├── js/                    # React-Komponenten
 │       └── package.json           # JS-Abhängigkeiten
-└── docs/                          # Dokumentation
+├── docs/                          # Öffentliche Dokumentation
+└── docs/dev/                      # Entwickler-Docs (nicht veröffentlicht)
 ```
 
 ### Tests ausführen
@@ -239,7 +295,7 @@ SuluContentTypesBundle/
 composer test
 ```
 
-### Code Style
+### Code-Style
 
 ```bash
 composer cs-fix
@@ -256,9 +312,9 @@ composer cs-fix
 
 ### JavaScript/Flow Types
 
-Die JavaScript-Komponenten verwenden Flow Type Annotations (`// @flow`). Dies ist optional für die Entwicklung.
+Die JavaScript-Komponenten verwenden Flow-Type-Annotationen (`// @flow`). Dies ist optional für die Entwicklung.
 
-Siehe [docs/PHPSTORM_FLOW_FIX.md](docs/dev/PHPSTORM_FLOW_FIX.md) bei IDE-Warnungen.
+Siehe [docs/PHPSTORM_FLOW_FIX.md](docs/PHPSTORM_FLOW_FIX.md) bei IDE-Warnungen.
 
 ---
 
@@ -273,23 +329,23 @@ Dieses Bundle ist mit Blick auf Sulu 3.x-Kompatibilität entwickelt:
 
 ## Dokumentation
 
-- [Installationsanleitung](docs/INSTALLATION.md) - Schritt-für-Schritt Installation
-- [Flow Types](docs/dev/FLOW_TYPES.md) - Flow Type Annotations verstehen
-- [PhpStorm Fix](docs/dev/PHPSTORM_FLOW_FIX.md) - IDE-Warnungen beheben
-- [Beispiel-Template](docs/example_template.xml) - Vollständige XML-Beispiele
+- [Installation Guide](docs/INSTALLATION.md) - Schritt-für-Schritt Installation
+- [Flow Types](docs/FLOW_TYPES.md) - Flow-Type-Annotationen verstehen
+- [PhpStorm Fix](docs/PHPSTORM_FLOW_FIX.md) - IDE-Warnungen beheben
+- [Beispiel Template](docs/example_template.xml) - Vollständige XML-Beispiele
 - [Beispiel Twig](docs/example.html.twig) - Twig-Verwendungsbeispiele
 
 ---
 
 ## Mitwirken
 
-Beiträge sind willkommen! Bitte zögere nicht, einen Pull Request einzureichen.
+Beiträge sind willkommen! Bitte fühle dich frei, einen Pull Request einzureichen.
 
 ---
 
 ## Lizenz
 
-Dieses Bundle steht unter der MIT-Lizenz. Siehe die vollständige Lizenz in:
+Dieses Bundle steht unter der MIT-Lizenz. Die vollständige Lizenz findest du in:
 
 [LICENSE](LICENSE)
 
@@ -297,7 +353,7 @@ Dieses Bundle steht unter der MIT-Lizenz. Siehe die vollständige Lizenz in:
 
 ## Credits
 
-Erstellt und gewartet von [Manuxi](https://github.com/manuxi)
+Erstellt und gepflegt von [Manuxi](https://github.com/manuxi)
 
 ---
 
@@ -322,4 +378,4 @@ Geplante Features für zukünftige Versionen:
 
 ## Changelog
 
-Siehe [CHANGELOG.md](CHANGELOG.md) für die Versionshistorie.
+Siehe [CHANGELOG.md](CHANGELOG.md) für Versionsverlauf.

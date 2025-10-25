@@ -37,53 +37,47 @@
             </meta>
             <params>
                 <param name="values" type="collection">
-                    <param name="primary" value="primary">
+                    <param name="primary" value="primary:#0d6efd">
                         <meta>
                             <title lang="de">Primärfarbe (Blau)</title>
                             <title lang="en">Primary (Blue)</title>
                         </meta>
-                        <param name="color" value="#0d6efd"/>
                     </param>
-                    <param name="secondary" value="secondary">
+                    <param name="secondary" value="secondary:#6c757d">
                         <meta>
                             <title lang="de">Sekundärfarbe (Grau)</title>
                             <title lang="en">Secondary (Gray)</title>
                         </meta>
-                        <param name="color" value="#6c757d"/>
                     </param>
-                    <param name="success" value="success">
+                    <param name="success" value="success:#198754">
                         <meta>
                             <title lang="de">Erfolg (Grün)</title>
                             <title lang="en">Success (Green)</title>
                         </meta>
-                        <param name="color" value="#198754"/>
                     </param>
-                    <param name="danger" value="danger">
+                    <param name="danger" value="danger:#dc3545">
                         <meta>
                             <title lang="de">Gefahr (Rot)</title>
                             <title lang="en">Danger (Red)</title>
                         </meta>
-                        <param name="color" value="#dc3545"/>
                     </param>
-                    <param name="warning" value="warning">
+                    <param name="warning" value="warning:#ffc107">
                         <meta>
                             <title lang="de">Warnung (Gelb)</title>
                             <title lang="en">Warning (Yellow)</title>
                         </meta>
-                        <param name="color" value="#ffc107"/>
                     </param>
-                    <param name="info" value="info">
+                    <param name="info" value="info:#0dcaf0">
                         <meta>
                             <title lang="de">Info (Cyan)</title>
                             <title lang="en">Info (Cyan)</title>
                         </meta>
-                        <param name="color" value="#0dcaf0"/>
                     </param>
                 </param>
             </params>
         </property>
 
-        <!-- SliderRange Example: Banner Rotation -->
+        <!-- SliderRange Example: Banner Rotation (Classic with Input) -->
         <property name="banner_rotation_speed" type="slider_range" mandatory="false">
             <meta>
                 <title lang="de">Banner-Rotationsgeschwindigkeit (ms)</title>
@@ -94,10 +88,12 @@
                 <param name="max" value="10000"/>
                 <param name="step" value="500"/>
                 <param name="default_value" value="5000"/>
+                <param name="display_mode" value="input"/>
+                <param name="show_labels" value="true"/>
             </params>
         </property>
 
-        <!-- SliderRange Example: Opacity -->
+        <!-- SliderRange Example: Opacity (Floating Tooltip) -->
         <property name="overlay_opacity" type="slider_range" mandatory="false">
             <meta>
                 <title lang="de">Overlay-Transparenz (%)</title>
@@ -108,6 +104,55 @@
                 <param name="max" value="100"/>
                 <param name="step" value="5"/>
                 <param name="default_value" value="50"/>
+                <param name="display_mode" value="floating"/>
+                <param name="show_labels" value="true"/>
+            </params>
+        </property>
+
+        <!-- SliderRange Example: Volume (Inline) -->
+        <property name="volume_level" type="slider_range" mandatory="false">
+            <meta>
+                <title lang="de">Lautstärke</title>
+                <title lang="en">Volume Level</title>
+            </meta>
+            <params>
+                <param name="min" value="0"/>
+                <param name="max" value="100"/>
+                <param name="step" value="10"/>
+                <param name="default_value" value="50"/>
+                <param name="display_mode" value="inline"/>
+            </params>
+        </property>
+
+        <!-- SliderRange Example: Zoom (Below) -->
+        <property name="zoom_level" type="slider_range" mandatory="false">
+            <meta>
+                <title lang="de">Zoom-Stufe</title>
+                <title lang="en">Zoom Level</title>
+            </meta>
+            <params>
+                <param name="min" value="50"/>
+                <param name="max" value="200"/>
+                <param name="step" value="10"/>
+                <param name="default_value" value="100"/>
+                <param name="display_mode" value="below"/>
+                <param name="show_labels" value="true"/>
+            </params>
+        </property>
+
+        <!-- SliderRange Example: Brightness (Minimal - No Labels) -->
+        <property name="brightness" type="slider_range" mandatory="false">
+            <meta>
+                <title lang="de">Helligkeit</title>
+                <title lang="en">Brightness</title>
+            </meta>
+            <params>
+                <param name="min" value="0"/>
+                <param name="max" value="100"/>
+                <param name="step" value="5"/>
+                <param name="default_value" value="75"/>
+                <param name="display_mode" value="floating"/>
+                <param name="show_labels" value="false"/>
             </params>
         </property>
 

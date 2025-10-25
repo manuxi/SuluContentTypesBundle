@@ -7,57 +7,362 @@
     <div class="container">
         <h1>{{ content.title }}</h1>
 
-        {# NumberWithDefault Example #}
+        {# ================================================================== #}
+        {# NumberWithDefault Examples                                        #}
+        {# ================================================================== #}
+
+        {# Example 1: Auto-refresh with default interval #}
         {% if content.refresh_interval is defined %}
             <div class="alert alert-info">
                 <strong>Refresh Interval:</strong> {{ content.refresh_interval }}ms
+                {# Defaults to 5000ms if not set in admin #}
             </div>
-            
+
             <div id="auto-refresh" data-refresh="{{ content.refresh_interval }}">
                 <!-- This div will auto-refresh every {{ content.refresh_interval }}ms -->
             </div>
+
+            <script>
+                // JavaScript usage
+                const refreshInterval = {{ content.refresh_interval }};
+                setInterval(() => {
+                    // Refresh logic here
+                }, refreshInterval);
+            </script>
         {% endif %}
 
-        {# ColorSelect Example #}
+        {# Example 2: Articles per page #}
+        {% if content.articles_per_page is defined %}
+            <div class="articles-grid">
+                {# Display articles with pagination #}
+                <p>Showing {{ content.articles_per_page }} articles per page</p>
+                {# Your article loop here with limit: content.articles_per_page #}
+            </div>
+        {% endif %}
+
+        {# ================================================================== #}
+        {# ColorSelect Examples                                              #}
+        {# ================================================================== #}
+
+        {# Example 1: Bootstrap Button Colors #}
         {% if content.button_color is defined %}
             <div class="my-3">
+                <h3>Button Color Demo</h3>
+                {# Value is just the key, e.g. "primary", "success" #}
                 <button class="btn btn-{{ content.button_color }}">
                     Call to Action Button
+                </button>
+                <button class="btn btn-outline-{{ content.button_color }}">
+                    Outlined Button
                 </button>
             </div>
         {% endif %}
 
-        {# SliderRange Example: Banner Rotation #}
-        {% if content.banner_rotation_speed is defined %}
-            <div class="banner-carousel" data-rotation-speed="{{ content.banner_rotation_speed }}">
-                <div class="banner-item">Banner 1</div>
-                <div class="banner-item">Banner 2</div>
-                <div class="banner-item">Banner 3</div>
-            </div>
-            
-            <script>
-                // Initialize banner rotation with {{ content.banner_rotation_speed }}ms interval
-                const bannerSpeed = {{ content.banner_rotation_speed }};
-                // Your banner rotation logic here
-            </script>
-        {% endif %}
-
-        {# SliderRange Example: Overlay Opacity #}
-        {% if content.overlay_opacity is defined %}
-            <div class="image-with-overlay">
-                <img src="..." alt="...">
-                <div class="overlay" style="opacity: {{ content.overlay_opacity / 100 }}">
-                    <h2>Overlay Text</h2>
-                    <p>Opacity: {{ content.overlay_opacity }}%</p>
+        {# Example 2: Badge/Alert Colors #}
+        {% if content.badge_color is defined %}
+            <div class="my-3">
+                <h3>Badge Color Demo</h3>
+                <span class="badge bg-{{ content.badge_color }}">
+                    Status Badge
+                </span>
+                <div class="alert alert-{{ content.badge_color }}">
+                    Alert message with {{ content.badge_color }} color
                 </div>
             </div>
         {% endif %}
 
-        {# NumberWithDefault Example: Articles per Page #}
-        {% if content.articles_per_page is defined %}
-            <div class="articles-grid" data-per-page="{{ content.articles_per_page }}">
-                <!-- Show {{ content.articles_per_page }} articles per page -->
+        {# Example 3: Custom CSS Classes #}
+        {% if content.theme_color is defined %}
+            <div class="themed-section theme-{{ content.theme_color }}">
+                <h3>Themed Section</h3>
+                <p>This section uses the {{ content.theme_color }} theme.</p>
             </div>
         {% endif %}
+
+        {# ================================================================== #}
+        {# SliderRange Examples - Different Display Modes                    #}
+        {# ================================================================== #}
+
+        {# Example 1: Banner Rotation Speed (input mode) #}
+        {% if content.banner_rotation_speed is defined %}
+            <div class="my-4">
+                <h3>Banner Carousel</h3>
+                <div class="banner-carousel"
+                     data-rotation-speed="{{ content.banner_rotation_speed }}"
+                     data-speed-seconds="{{ content.banner_rotation_speed / 1000 }}">
+                    <div class="banner-item active">Banner 1</div>
+                    <div class="banner-item">Banner 2</div>
+                    <div class="banner-item">Banner 3</div>
+                </div>
+                <p class="text-muted">
+                    Rotation speed: {{ content.banner_rotation_speed }}ms
+                    ({{ content.banner_rotation_speed / 1000 }}s)
+                </p>
+            </div>
+
+            <script>
+                // Banner rotation with configurable speed
+                (function() {
+                    const carousel = document.querySelector('.banner-carousel');
+                    const speed = {{ content.banner_rotation_speed }};
+                    let currentIndex = 0;
+                    const items = carousel.querySelectorAll('.banner-item');
+
+                    setInterval(() => {
+                        items[currentIndex].classList.remove('active');
+                        currentIndex = (currentIndex + 1) % items.length;
+                        items[currentIndex].classList.add('active');
+                    }, speed);
+                })();
+            </script>
+        {% endif %}
+
+        {# Example 2: Overlay Opacity (floating mode) #}
+        {% if content.overlay_opacity is defined %}
+            <div class="my-4">
+                <h3>Image with Overlay</h3>
+                <div class="image-with-overlay" style="position: relative;">
+                    <img src="https://via.placeholder.com/800x400"
+                         alt="Example"
+                         style="width: 100%; height: auto;">
+                    <div class="overlay"
+                         style="position: absolute;
+                                 top: 0;
+                                 left: 0;
+                                 width: 100%;
+                                 height: 100%;
+                                 background: rgba(0,0,0,{{ content.overlay_opacity / 100 }});
+                                 display: flex;
+                                 align-items: center;
+                                 justify-content: center;
+                                 color: white;">
+                        <div>
+                            <h2>Overlay Text</h2>
+                            <p>Opacity: {{ content.overlay_opacity }}%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {# Example 3: Volume Control (inline mode) #}
+        {% if content.volume_level is defined %}
+            <div class="my-4">
+                <h3>Audio Player</h3>
+                <div class="audio-player" data-volume="{{ content.volume_level }}">
+                    <button id="playBtn">▶ Play</button>
+                    <span>Volume: {{ content.volume_level }}%</span>
+                </div>
+            </div>
+
+            <script>
+                // Set audio volume from slider
+                const audioVolume = {{ content.volume_level }} / 100;
+                // audio.volume = audioVolume;
+            </script>
+        {% endif %}
+
+        {# Example 4: Zoom Level (below mode) #}
+        {% if content.zoom_level is defined %}
+            <div class="my-4">
+                <h3>Zoomable Content</h3>
+                <div class="zoomable-content"
+                     style="transform: scale({{ content.zoom_level / 100 }});
+                             transform-origin: top left;">
+                    <p>This content is zoomed to {{ content.zoom_level }}%</p>
+                    <p>Default is 100%, range 50-200%</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {# Example 5: Brightness (floating mode without labels) #}
+        {% if content.brightness is defined %}
+            <div class="my-4">
+                <h3>Brightness Control</h3>
+                <div class="brightness-demo"
+                     style="filter: brightness({{ content.brightness / 100 }});">
+                    <img src="https://via.placeholder.com/400x300" alt="Demo">
+                    <p>Brightness: {{ content.brightness }}%</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {# ================================================================== #}
+        {# Advanced Examples - Combining Multiple Content Types              #}
+        {# ================================================================== #}
+
+        {# Example: Custom Card with all content types #}
+        <div class="my-4">
+            <div class="card border-{{ content.button_color|default('primary') }}">
+                <div class="card-header bg-{{ content.button_color|default('primary') }} text-white">
+                    <h4>Combined Example</h4>
+                </div>
+                <div class="card-body">
+                    {% if content.overlay_opacity is defined %}
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-{{ content.button_color|default('primary') }}"
+                                 role="progressbar"
+                                 style="width: {{ content.overlay_opacity }}%"
+                                 aria-valuenow="{{ content.overlay_opacity }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                                {{ content.overlay_opacity }}%
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <button class="btn btn-{{ content.button_color|default('primary') }}">
+                        Action Button
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {# ================================================================== #}
+        {# CSS Variables Example - Using values in CSS                       #}
+        {# ================================================================== #}
+
+        <style>
+            :root {
+            {% if content.overlay_opacity is defined %}
+                --overlay-opacity: {{ content.overlay_opacity / 100 }};
+            {% endif %}
+            {% if content.banner_rotation_speed is defined %}
+                --animation-duration: {{ content.banner_rotation_speed }}ms;
+            {% endif %}
+            {% if content.zoom_level is defined %}
+                --zoom-scale: {{ content.zoom_level / 100 }};
+            {% endif %}
+            }
+
+            .animated-element {
+                animation-duration: var(--animation-duration, 5000ms);
+            }
+
+            .overlay-element {
+                opacity: var(--overlay-opacity, 0.5);
+            }
+
+            .scaled-element {
+                transform: scale(var(--zoom-scale, 1));
+            }
+        </style>
+
+        {# ================================================================== #}
+        {# Data Attributes for JavaScript                                    #}
+        {# ================================================================== #}
+
+        <div class="settings-container"
+                {% if content.refresh_interval is defined %}
+                    data-refresh="{{ content.refresh_interval }}"
+                {% endif %}
+                {% if content.banner_rotation_speed is defined %}
+                    data-carousel-speed="{{ content.banner_rotation_speed }}"
+                {% endif %}
+                {% if content.overlay_opacity is defined %}
+                    data-opacity="{{ content.overlay_opacity }}"
+                {% endif %}
+                {% if content.volume_level is defined %}
+                    data-volume="{{ content.volume_level }}"
+                {% endif %}
+                {% if content.button_color is defined %}
+            data-theme="{{ content.button_color }}"
+                {% endif %}>
+
+            <p>All settings are available as data attributes for JavaScript</p>
+
+            <script>
+                // Access all settings from data attributes
+                const settings = document.querySelector('.settings-container');
+                const config = {
+                    refresh: settings.dataset.refresh,
+                    carouselSpeed: settings.dataset.carouselSpeed,
+                    opacity: settings.dataset.opacity,
+                    volume: settings.dataset.volume,
+                    theme: settings.dataset.theme
+                };
+
+                console.log('Site Configuration:', config);
+            </script>
+        </div>
+
+        {# ================================================================== #}
+        {# Conditional Classes Example                                       #}
+        {# ================================================================== #}
+
+        <div class="feature-box
+                    {% if content.button_color is defined %}theme-{{ content.button_color }}{% endif %}
+                    {% if content.overlay_opacity is defined and content.overlay_opacity < 30 %}low-opacity{% endif %}
+                    {% if content.zoom_level is defined and content.zoom_level > 150 %}zoomed-in{% endif %}">
+            <h3>Conditional Styling</h3>
+            <p>This box has conditional classes based on content type values.</p>
+        </div>
+
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Example styles for content types demo */
+        .banner-carousel {
+            position: relative;
+            height: 300px;
+            background: #f8f9fa;
+            overflow: hidden;
+        }
+
+        .banner-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .banner-item.active {
+            opacity: 1;
+        }
+
+        .themed-section {
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .themed-section.theme-primary {
+            background-color: #e3f2fd;
+            border-left: 4px solid #0d6efd;
+        }
+
+        .themed-section.theme-success {
+            background-color: #d1e7dd;
+            border-left: 4px solid #198754;
+        }
+
+        .themed-section.theme-danger {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+
+        .feature-box {
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 2px solid #dee2e6;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .feature-box.low-opacity {
+            opacity: 0.7;
+        }
+
+        .feature-box.zoomed-in {
+            transform: scale(1.1);
+        }
+    </style>
 {% endblock %}
