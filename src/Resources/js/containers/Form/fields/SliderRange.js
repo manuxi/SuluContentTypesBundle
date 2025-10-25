@@ -60,25 +60,26 @@ const styles = {
         transform: 'translateX(-50%)',
     },
     labelCurrentFloating: {
-        fontWeight: 600,
-        color: '#112a46',
         position: 'absolute',
-        bottom: '100%',
-        marginBottom: '4px',
+        bottom: 'calc(100% + 8px)',
         transform: 'translateX(-50%)',
         backgroundColor: '#112a46',
-        padding: '2px 6px',
-        borderRadius: '3px',
-        fontSize: '11px',
+        color: '#fff',
+        padding: '3px 8px',
+        borderRadius: '4px',
+        fontSize: '12px',
+        fontWeight: 600,
+        lineHeight: '1',
         whiteSpace: 'nowrap',
         pointerEvents: 'none',
         transition: 'left 0.1s ease-out',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
     },
     labelCurrentBelow: {
         fontWeight: 600,
         color: '#112a46',
         textAlign: 'center',
-        marginTop: '8px',
+        marginTop: '4px',
         fontSize: '14px',
     },
     value: {
@@ -190,8 +191,14 @@ class SliderRange extends React.Component<FieldTypeProps<number>> {
     };
 
     calculateCurrentPosition = (value: number, min: number, max: number): string => {
+        // Calculate percentage of the slider's range (0-100%)
         const percentage = ((value - min) / (max - min)) * 100;
-        return `${percentage}%`;
+
+        // The slider has 8px margin on each side, so we need to adjust
+        // The actual slider track is from 8px to calc(100% - 8px)
+        // This means the usable width is (100% - 16px)
+        // Position should be: 8px + (percentage of usable width)
+        return `calc(8px + ${percentage}% * (100% - 16px) / 100%)`;
     };
 
     render() {
@@ -239,14 +246,14 @@ class SliderRange extends React.Component<FieldTypeProps<number>> {
 
                         {/* Floating label above thumb */}
                         {displayMode === 'floating' && (
-                            <span
+                            <div
                                 style={{
                                     ...styles.labelCurrentFloating,
                                     left: currentPosition,
                                 }}
                             >
                                 {currentValue}
-                            </span>
+                            </div>
                         )}
 
                         {/* Labels below slider */}
