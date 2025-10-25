@@ -1,0 +1,129 @@
+<?xml version="1.0" ?>
+<template xmlns="http://schemas.sulu.io/template/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>example_content_types</key>
+
+    <view>templates/example_content_types</view>
+    <controller>App\Controller\WebsiteController::indexAction</controller>
+
+    <meta>
+        <title lang="de">Beispiel: Content Types</title>
+        <title lang="en">Example: Content Types</title>
+    </meta>
+
+    <properties>
+        <!-- NumberWithDefault Example -->
+        <property name="refresh_interval" type="number_with_default" mandatory="false">
+            <meta>
+                <title lang="de">Aktualisierungsintervall (ms)</title>
+                <title lang="en">Refresh Interval (ms)</title>
+            </meta>
+            <params>
+                <param name="min" value="1000"/>
+                <param name="max" value="30000"/>
+                <param name="step" value="500"/>
+                <param name="multiple_of" value="1"/>
+                <param name="default_value" value="5000"/>
+            </params>
+        </property>
+
+        <!-- ColorSelect Example: Bootstrap Colors -->
+        <property name="button_color" type="color_select" mandatory="false">
+            <meta>
+                <title lang="de">Button-Farbe</title>
+                <title lang="en">Button Color</title>
+            </meta>
+            <params>
+                <param name="values" type="collection">
+                    <param name="primary" value="primary">
+                        <meta>
+                            <title lang="de">Primärfarbe (Blau)</title>
+                            <title lang="en">Primary (Blue)</title>
+                        </meta>
+                        <param name="color" value="#0d6efd"/>
+                    </param>
+                    <param name="secondary" value="secondary">
+                        <meta>
+                            <title lang="de">Sekundärfarbe (Grau)</title>
+                            <title lang="en">Secondary (Gray)</title>
+                        </meta>
+                        <param name="color" value="#6c757d"/>
+                    </param>
+                    <param name="success" value="success">
+                        <meta>
+                            <title lang="de">Erfolg (Grün)</title>
+                            <title lang="en">Success (Green)</title>
+                        </meta>
+                        <param name="color" value="#198754"/>
+                    </param>
+                    <param name="danger" value="danger">
+                        <meta>
+                            <title lang="de">Gefahr (Rot)</title>
+                            <title lang="en">Danger (Red)</title>
+                        </meta>
+                        <param name="color" value="#dc3545"/>
+                    </param>
+                    <param name="warning" value="warning">
+                        <meta>
+                            <title lang="de">Warnung (Gelb)</title>
+                            <title lang="en">Warning (Yellow)</title>
+                        </meta>
+                        <param name="color" value="#ffc107"/>
+                    </param>
+                    <param name="info" value="info">
+                        <meta>
+                            <title lang="de">Info (Cyan)</title>
+                            <title lang="en">Info (Cyan)</title>
+                        </meta>
+                        <param name="color" value="#0dcaf0"/>
+                    </param>
+                </param>
+            </params>
+        </property>
+
+        <!-- SliderRange Example: Banner Rotation -->
+        <property name="banner_rotation_speed" type="slider_range" mandatory="false">
+            <meta>
+                <title lang="de">Banner-Rotationsgeschwindigkeit (ms)</title>
+                <title lang="en">Banner Rotation Speed (ms)</title>
+            </meta>
+            <params>
+                <param name="min" value="1000"/>
+                <param name="max" value="10000"/>
+                <param name="step" value="500"/>
+                <param name="default_value" value="5000"/>
+            </params>
+        </property>
+
+        <!-- SliderRange Example: Opacity -->
+        <property name="overlay_opacity" type="slider_range" mandatory="false">
+            <meta>
+                <title lang="de">Overlay-Transparenz (%)</title>
+                <title lang="en">Overlay Opacity (%)</title>
+            </meta>
+            <params>
+                <param name="min" value="0"/>
+                <param name="max" value="100"/>
+                <param name="step" value="5"/>
+                <param name="default_value" value="50"/>
+            </params>
+        </property>
+
+        <!-- NumberWithDefault Example: Articles per Page -->
+        <property name="articles_per_page" type="number_with_default" mandatory="false">
+            <meta>
+                <title lang="de">Artikel pro Seite</title>
+                <title lang="en">Articles per Page</title>
+            </meta>
+            <params>
+                <param name="min" value="1"/>
+                <param name="max" value="50"/>
+                <param name="step" value="1"/>
+                <param name="multiple_of" value="1"/>
+                <param name="default_value" value="10"/>
+            </params>
+        </property>
+    </properties>
+</template>

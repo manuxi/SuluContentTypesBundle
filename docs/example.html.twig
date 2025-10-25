@@ -1,0 +1,63 @@
+{# templates/example_content_types.html.twig #}
+{% extends "base.html.twig" %}
+
+{% block title %}{{ content.title }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ content.title }}</h1>
+
+        {# NumberWithDefault Example #}
+        {% if content.refresh_interval is defined %}
+            <div class="alert alert-info">
+                <strong>Refresh Interval:</strong> {{ content.refresh_interval }}ms
+            </div>
+            
+            <div id="auto-refresh" data-refresh="{{ content.refresh_interval }}">
+                <!-- This div will auto-refresh every {{ content.refresh_interval }}ms -->
+            </div>
+        {% endif %}
+
+        {# ColorSelect Example #}
+        {% if content.button_color is defined %}
+            <div class="my-3">
+                <button class="btn btn-{{ content.button_color }}">
+                    Call to Action Button
+                </button>
+            </div>
+        {% endif %}
+
+        {# SliderRange Example: Banner Rotation #}
+        {% if content.banner_rotation_speed is defined %}
+            <div class="banner-carousel" data-rotation-speed="{{ content.banner_rotation_speed }}">
+                <div class="banner-item">Banner 1</div>
+                <div class="banner-item">Banner 2</div>
+                <div class="banner-item">Banner 3</div>
+            </div>
+            
+            <script>
+                // Initialize banner rotation with {{ content.banner_rotation_speed }}ms interval
+                const bannerSpeed = {{ content.banner_rotation_speed }};
+                // Your banner rotation logic here
+            </script>
+        {% endif %}
+
+        {# SliderRange Example: Overlay Opacity #}
+        {% if content.overlay_opacity is defined %}
+            <div class="image-with-overlay">
+                <img src="..." alt="...">
+                <div class="overlay" style="opacity: {{ content.overlay_opacity / 100 }}">
+                    <h2>Overlay Text</h2>
+                    <p>Opacity: {{ content.overlay_opacity }}%</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {# NumberWithDefault Example: Articles per Page #}
+        {% if content.articles_per_page is defined %}
+            <div class="articles-grid" data-per-page="{{ content.articles_per_page }}">
+                <!-- Show {{ content.articles_per_page }} articles per page -->
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

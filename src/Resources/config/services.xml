@@ -1,12 +1,25 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://symfony.com/schema/dic/services
-                               https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <!--Handler-->
-        <service id="sulu_bulk_actions.handler_registry" class="Manuxi\SuluBulkActionsBundle\Handler\BulkActionHandlerRegistry" public="true">
+        <!-- NumberWithDefault Content Type -->
+        <service id="manuxi.sulu_content_types.content.type.number_with_default"
+                 class="Manuxi\SuluContentTypesBundle\Content\Type\NumberWithDefault">
+            <tag name="sulu.content.type" alias="number_with_default"/>
+        </service>
+
+        <!-- ColorSelect Content Type -->
+        <service id="manuxi.sulu_content_types.content.type.color_select"
+                 class="Manuxi\SuluContentTypesBundle\Content\Type\ColorSelect">
+            <argument type="service" id="logger"/>
+            <tag name="sulu.content.type" alias="color_select"/>
+        </service>
+
+        <!-- SliderRange Content Type -->
+        <service id="manuxi.sulu_content_types.content.type.slider_range"
+                 class="Manuxi\SuluContentTypesBundle\Content\Type\SliderRange">
+            <tag name="sulu.content.type" alias="slider_range"/>
         </service>
     </services>
 </container>
