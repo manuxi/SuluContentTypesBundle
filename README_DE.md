@@ -25,7 +25,7 @@ Nummern-Eingabefeld mit Default-Wert-Unterstützung. Erweitert den Standard `num
 ![docs/img/NumberWithDefault.png](docs/img/NumberWithDefault.png)
 
 ### 2. 🎨 ColorSelect
-Auswahlfeld mit Farbvorschau über Sulus Icon-Font. Perfekt für Bootstrap-Farbklassen oder beliebige farbcodierte Optionen.
+Auswahlfeld mit Farbvorschau. Beliebige Farb-Paletten per yaml konfigurierbar (s.u.).
 
 **Anwendungsfälle:**
 - Button-Farben
@@ -34,7 +34,7 @@ Auswahlfeld mit Farbvorschau über Sulus Icon-Font. Perfekt für Bootstrap-Farbk
 
 ![docs/img/ColorSelectSelection.png](docs/img/ColorSelectSelection.png)
 
-Options:
+Standard-Optionen (Palette "bootstrap"):
 
 ![docs/img/ColorSelectOptions.png](docs/img/ColorSelectOptions.png)
 
@@ -253,7 +253,9 @@ Der SliderRange unterstützt mehrere Anzeigemodi über den `display_mode` Parame
     </param>
 </param>
 ```
-Oder Nutzung von Farb-Paletten mit Service
+
+### ColorSelect Farb-Paletten
+***Nutzung von Farb-Paletten mit Service:***
 ```xml
 <param name="values"
         type="expression"
@@ -265,7 +267,7 @@ Oder Nutzung von Farb-Paletten mit Service
 />
 ```
 
-Farb-Paletten config: config/packages/sulu_content_types.yaml
+Eigene Farb-Paletten: config/packages/sulu_content_types.yaml
 ```yaml
 sulu_content_types:
     color_palettes:
@@ -273,6 +275,11 @@ sulu_content_types:
             primary: '#0d6efd'
             secondary: '#6c757d'
 ```
+Anpassung in der xml: `.getValues('custom')`
+
+Damit sind eigene Farben möglich:
+
+![img.png](docs/img/ColorSelectCustomPalette.png)
 
 ### SliderRange
 

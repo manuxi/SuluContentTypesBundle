@@ -25,7 +25,7 @@ Number input field with default value support. Extends the standard `number` typ
 ![docs/img/NumberWithDefault.png](docs/img/NumberWithDefault.png)
 
 ### 2. 🎨 ColorSelect
-Select field with color preview using Sulu's icon font. Perfect for Bootstrap color classes or any color-coded options.
+Selection field with colour preview. Any colour-coded options can be configured via yaml.
 
 **Use Cases:**
 - Button colors
@@ -34,7 +34,7 @@ Select field with color preview using Sulu's icon font. Perfect for Bootstrap co
 
 ![docs/img/ColorSelectSelection.png](docs/img/ColorSelectSelection.png)
 
-Options:
+Default options (Palette "bootstrap"):
 
 ![docs/img/ColorSelectOptions.png](docs/img/ColorSelectOptions.png)
 
@@ -253,7 +253,9 @@ The SliderRange supports multiple display modes via the `display_mode` parameter
     </param>
 </param>
 ```
- or using palettes with service
+
+### ColorSelect Color Palettes
+***Using palettes with service:***
 ```xml
 <param name="values"
         type="expression"
@@ -265,14 +267,21 @@ The SliderRange supports multiple display modes via the `display_mode` parameter
 />
 ```
 
-Palettes config: config/packages/sulu_content_types.yaml
+Custom color palette: config/packages/sulu_content_types.yaml
 ```yaml
 sulu_content_types:
     color_palettes:
         custom:
             primary: '#0d6efd'
             secondary: '#6c757d'
+            ...
 ```
+Reflect changes in xml: `.getValues('custom')`
+
+Now use own color palette:
+
+![img.png](docs/img/ColorSelectCustomPalette.png)
+
 ### SliderRange
 
 | Parameter | Type | Description | Default | Example |
