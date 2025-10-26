@@ -330,8 +330,6 @@ Dieses Bundle ist mit Blick auf Sulu 3.x-Kompatibilität entwickelt:
 ## Dokumentation
 
 - [Installation Guide](docs/INSTALLATION.md) - Schritt-für-Schritt Installation
-- [Flow Types](docs/FLOW_TYPES.md) - Flow-Type-Annotationen verstehen
-- [PhpStorm Fix](docs/PHPSTORM_FLOW_FIX.md) - IDE-Warnungen beheben
 - [Beispiel Template](docs/example_template.xml) - Vollständige XML-Beispiele
 - [Beispiel Twig](docs/example.html.twig) - Twig-Verwendungsbeispiele
 

@@ -183,21 +183,43 @@ Erstelle ein neues Template in `config/templates/pages/`:
             </meta>
             <params>
                 <param name="values" type="collection">
-                    <param name="red">
-                        <params>
-                            <param name="name" value="Rot"/>
-                            <param name="value" value="danger"/>
-                            <param name="color" value="#dc3545"/>
-                        </params>
+                    <param name="primary" value="primary:#0d6efd">
+                        <meta>
+                            <title lang="de">Primär</title>
+                            <title lang="en">Primary</title>
+                        </meta>
                     </param>
-                    <param name="blue">
-                        <params>
-                            <param name="name" value="Blau"/>
-                            <param name="value" value="primary"/>
-                            <param name="color" value="#0d6efd"/>
-                        </params>
+                    <param name="success" value="success:#198754">
+                        <meta>
+                            <title lang="de">Erfolg</title>
+                            <title lang="en">Success</title>
+                        </meta>
+                    </param>
+                    <param name="danger" value="danger:#dc3545">
+                        <meta>
+                            <title lang="de">Gefahr</title>
+                            <title lang="en">Danger</title>
+                        </meta>
                     </param>
                 </param>
+            </params>
+        </property>
+
+        <!-- Test ColorSelect with palette service -->
+        <property name="test_color" type="color_select">
+            <meta>
+                <title lang="de">Test Farbe</title>
+                <title lang="en">Test Color</title>
+            </meta>
+            <params>
+                <param name="values"
+                       type="expression"
+                       value="service('sulu_content_types.color_palette_provider').getValues('bootstrap')"
+                />
+                <param name="default_value"
+                       type="expression"
+                       value="service('sulu_content_types.color_palette_provider').getDefaultValue('bootstrap')"
+                />
             </params>
         </property>
 
@@ -243,6 +265,39 @@ Erstelle `templates/pages/test.html.twig`:
 4. Teste die Content Types!
 
 ---
+
+## Hinweis
+Wie im Beispiel oben zu sehen ist, kann eine eigene Farbpalette für den ColorSelector eingebunden werden.
+Vorhandene Paletten:
+```php
+- bootstrap
+- bootstrap_text
+- bootstrap_bg
+- bootstrap_emphasis
+- custom
+- status
+```
+
+Eigene Paletten können erstellt werden:
+Erstelle `config/packages/sulu_content_types.yaml`:
+```php
+sulu_content_types:
+    color_palettes:
+        custom:
+            primary: '#0d6efd'
+```
+
+In der xml dann einfach benutzen:
+```php
+<param name="values"
+       type="expression"
+       value="service('sulu_content_types.color_palette_provider').getValues('custom')"
+/>
+<param name="default_value"
+       type="expression"
+       value="service('sulu_content_types.color_palette_provider').getDefaultValue('custom')"
+/>
+```
 
 ## Troubleshooting
 

@@ -3,6 +3,20 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+
+        <!-- Color Palette Provider Service -->
+        <service id="manuxi.sulu_content_types.color_palette_provider"
+                 class="Manuxi\SuluContentTypesBundle\Service\ColorPaletteProvider"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument>%sulu_content_types.color_palettes%</argument>
+        </service>
+
+        <service id="sulu_content_types.color_palette_provider"
+                 alias="manuxi.sulu_content_types.color_palette_provider"
+                 public="true">
+        </service>
+
         <!-- NumberWithDefault Content Type -->
         <service id="manuxi.sulu_content_types.content.type.number_with_default"
                  class="Manuxi\SuluContentTypesBundle\Content\Type\NumberWithDefault">
