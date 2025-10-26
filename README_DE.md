@@ -22,6 +22,8 @@ Nummern-Eingabefeld mit Default-Wert-Unterstützung. Erweitert den Standard `num
 - Timeouts
 - Zähler mit Standardwerten
 
+![img.png](docs/img/NumberWithDefault.png)
+
 ### 2. 🎨 ColorSelect
 Auswahlfeld mit Farbvorschau über Sulus Icon-Font. Perfekt für Bootstrap-Farbklassen oder beliebige farbcodierte Optionen.
 
@@ -29,6 +31,8 @@ Auswahlfeld mit Farbvorschau über Sulus Icon-Font. Perfekt für Bootstrap-Farbk
 - Button-Farben
 - Badge-Farben
 - Theme-Farbauswahl
+
+![img_1.png](docs/img/ColorSelect.png)
 
 ### 3. 🎚️ SliderRange
 Visueller Range-Slider mit konfigurierbaren Anzeigemodi. Unterstützt Textbox-Eingabe, schwebende Tooltips und verschiedene Label-Layouts.
@@ -38,6 +42,8 @@ Visueller Range-Slider mit konfigurierbaren Anzeigemodi. Unterstützt Textbox-Ei
 - Deckkraft/Transparenz
 - Prioritätsstufen
 - Lautstärkeregler
+
+![img_2.png](docs/img/SliderRange.png)
 
 ---
 
@@ -138,20 +144,20 @@ bin/console cache:clear
         <param name="values" type="collection">
             <param name="primary" value="primary:#0d6efd">
                 <meta>
-                    <title lang="de">Primärfarbe (Blau)</title>
                     <title lang="en">Primary (Blue)</title>
+                    <title lang="de">Primärfarbe (Blau)</title>
                 </meta>
             </param>
             <param name="secondary" value="secondary:#6c757d">
                 <meta>
-                    <title lang="de">Sekundärfarbe (Grau)</title>
                     <title lang="en">Secondary (Gray)</title>
+                    <title lang="de">Sekundärfarbe (Grau)</title>
                 </meta>
             </param>
             <param name="success" value="success:#198754">
                 <meta>
-                    <title lang="de">Erfolg (Grün)</title>
                     <title lang="en">Success (Green)</title>
+                    <title lang="de">Erfolg (Grün)</title>
                 </meta>
             </param>
         </param>
@@ -242,6 +248,26 @@ Der SliderRange unterstützt mehrere Anzeigemodi über den `display_mode` Parame
         <meta><title lang="de">Primär</title></meta>
     </param>
 </param>
+```
+Oder Nutzung von Farb-Paletten mit Service
+```xml
+<param name="values"
+        type="expression"
+        value="service('sulu_content_types.color_palette_provider').getValues('bootstrap')"
+        />
+<param name="default_value"
+       type="expression"
+       value="service('sulu_content_types.color_palette_provider').getDefaultValue('bootstrap')"
+/>
+```
+
+Farb-Paletten config: config/packages/sulu_content_types.yaml
+```yaml
+sulu_content_types:
+    color_palettes:
+        custom:
+            primary: '#0d6efd'
+            secondary: '#6c757d'
 ```
 
 ### SliderRange
