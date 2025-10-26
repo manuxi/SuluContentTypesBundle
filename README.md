@@ -22,7 +22,7 @@ Number input field with default value support. Extends the standard `number` typ
 - Timeouts
 - Counters with default values
 
-![img.png](docs/img/NumberWithDefault.png)
+![docs/img/NumberWithDefault.png](docs/img/NumberWithDefault.png)
 
 ### 2. 🎨 ColorSelect
 Select field with color preview using Sulu's icon font. Perfect for Bootstrap color classes or any color-coded options.
@@ -32,7 +32,11 @@ Select field with color preview using Sulu's icon font. Perfect for Bootstrap co
 - Badge colors
 - Theme color selection
 
-![img_1.png](docs/img/ColorSelect.png)
+![docs/img/ColorSelectSelection.png](docs/img/ColorSelectSelection.png)
+
+Options:
+
+![docs/img/ColorSelectOptions.png](docs/img/ColorSelectOptions.png)
 
 ### 3. 🎚️ SliderRange
 Visual range slider with configurable display modes. Supports textbox input, floating tooltips, and various label layouts.
@@ -43,7 +47,7 @@ Visual range slider with configurable display modes. Supports textbox input, flo
 - Priority levels
 - Volume controls
 
-![img_2.png](docs/img/SliderRange.png)
+![docs/img/SliderRange.png](docs/img/SliderRange.png)
 
 ---
 

@@ -22,7 +22,7 @@ Nummern-Eingabefeld mit Default-Wert-Unterstützung. Erweitert den Standard `num
 - Timeouts
 - Zähler mit Standardwerten
 
-![img.png](docs/img/NumberWithDefault.png)
+![docs/img/NumberWithDefault.png](docs/img/NumberWithDefault.png)
 
 ### 2. 🎨 ColorSelect
 Auswahlfeld mit Farbvorschau über Sulus Icon-Font. Perfekt für Bootstrap-Farbklassen oder beliebige farbcodierte Optionen.
@@ -32,7 +32,11 @@ Auswahlfeld mit Farbvorschau über Sulus Icon-Font. Perfekt für Bootstrap-Farbk
 - Badge-Farben
 - Theme-Farbauswahl
 
-![img_1.png](docs/img/ColorSelect.png)
+![docs/img/ColorSelectSelection.png](docs/img/ColorSelectSelection.png)
+
+Options:
+
+![docs/img/ColorSelectOptions.png](docs/img/ColorSelectOptions.png)
 
 ### 3. 🎚️ SliderRange
 Visueller Range-Slider mit konfigurierbaren Anzeigemodi. Unterstützt Textbox-Eingabe, schwebende Tooltips und verschiedene Label-Layouts.
@@ -43,7 +47,7 @@ Visueller Range-Slider mit konfigurierbaren Anzeigemodi. Unterstützt Textbox-Ei
 - Prioritätsstufen
 - Lautstärkeregler
 
-![img_2.png](docs/img/SliderRange.png)
+![docs/img/SliderRange.png](docs/img/SliderRange.png)
 
 ---
 
