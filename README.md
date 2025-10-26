@@ -22,6 +22,8 @@ Number input field with default value support. Extends the standard `number` typ
 - Timeouts
 - Counters with default values
 
+![img.png](docs/img/NumberWithDefault.png)
+
 ### 2. 🎨 ColorSelect
 Select field with color preview using Sulu's icon font. Perfect for Bootstrap color classes or any color-coded options.
 
@@ -29,6 +31,8 @@ Select field with color preview using Sulu's icon font. Perfect for Bootstrap co
 - Button colors
 - Badge colors
 - Theme color selection
+
+![img_1.png](docs/img/ColorSelect.png)
 
 ### 3. 🎚️ SliderRange
 Visual range slider with configurable display modes. Supports textbox input, floating tooltips, and various label layouts.
@@ -38,6 +42,8 @@ Visual range slider with configurable display modes. Supports textbox input, flo
 - Opacity/transparency
 - Priority levels
 - Volume controls
+
+![img_2.png](docs/img/SliderRange.png)
 
 ---
 
@@ -243,7 +249,26 @@ The SliderRange supports multiple display modes via the `display_mode` parameter
     </param>
 </param>
 ```
+ or using palettes with service
+```xml
+<param name="values"
+        type="expression"
+        value="service('sulu_content_types.color_palette_provider').getValues('bootstrap')"
+        />
+<param name="default_value"
+       type="expression"
+       value="service('sulu_content_types.color_palette_provider').getDefaultValue('bootstrap')"
+/>
+```
 
+Palettes config: config/packages/sulu_content_types.yaml
+```yaml
+sulu_content_types:
+    color_palettes:
+        custom:
+            primary: '#0d6efd'
+            secondary: '#6c757d'
+```
 ### SliderRange
 
 | Parameter | Type | Description | Default | Example |
