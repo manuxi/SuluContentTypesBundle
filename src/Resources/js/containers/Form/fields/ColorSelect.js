@@ -4,8 +4,9 @@ import {observer} from 'mobx-react';
 import {SingleSelect, Icon} from 'sulu-admin-bundle/components';
 import type {FieldTypeProps} from 'sulu-admin-bundle/types';
 import {toJS} from 'mobx';
+import colorSelectStyles from './ColorSelect.scss';
 
-const styles = {
+const stylesx = {
     colorSelectOption: {
         display: 'flex',
         alignItems: 'center',
@@ -44,12 +45,13 @@ class ColorSelect extends React.Component<FieldTypeProps<string>> {
             return {
                 value: itemValue,
                 label: (
-                    <div style={styles.colorSelectOption}>
+                    <div className={colorSelectStyles.colorSelectOption}>
                         <Icon
                             name="su-square"
                             style={{color: color}}
+                            className={colorSelectStyles.icon}
                         />
-                        <span style={styles.colorSelectLabel}>{displayName}</span>
+                        <span className={colorSelectStyles.colorSelectLabel}>{displayName}</span>
                     </div>
                 ),
             };

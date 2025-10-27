@@ -3,173 +3,10 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import {Input} from 'sulu-admin-bundle/components';
 import type {FieldTypeProps} from 'sulu-admin-bundle/types';
-
-const styles = {
-    container: {
-        display: 'flex',
-        gap: '16px',
-        alignItems: 'flex-start',
-    },
-    wrapper: {
-        flex: 1,
-        paddingTop: '8px',
-        minWidth: 0,
-    },
-    sliderContainer: {
-        position: 'relative',
-        paddingBottom: '24px',
-        paddingLeft: '0',
-        paddingRight: '0',
-    },
-    input: {
-        height: '2px',
-        background: 'transparent',
-        borderRadius: '1px',
-        outline: 'none',
-        WebkitAppearance: 'none',
-        appearance: 'none',
-        cursor: 'pointer',
-        margin: '0 8px',
-        width: 'calc(100% - 16px)',
-    },
-    labels: {
-        position: 'relative',
-        marginTop: '8px',
-        height: '16px',
-        paddingLeft: '8px',
-        paddingRight: '8px',
-    },
-    label: {
-        fontSize: '12px',
-        color: '#999',
-        position: 'absolute',
-        top: 0,
-        whiteSpace: 'nowrap',
-    },
-    labelMin: {
-        left: '0',
-        transform: 'translateX(0)',
-    },
-    labelMax: {
-        right: '0',
-        transform: 'translateX(0)',
-    },
-    labelCurrent: {
-        fontWeight: 600,
-        color: '#112a46',
-        transform: 'translateX(-50%)',
-    },
-    labelCurrentFloating: {
-        position: 'absolute',
-        bottom: 'calc(100% + 8px)',
-        transform: 'translateX(-50%)',
-        backgroundColor: '#112a46',
-        color: '#fff',
-        padding: '3px 8px',
-        borderRadius: '4px',
-        fontSize: '12px',
-        fontWeight: 600,
-        lineHeight: '1',
-        whiteSpace: 'nowrap',
-        pointerEvents: 'none',
-        transition: 'left 0.1s ease-out',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-    },
-    labelCurrentBelow: {
-        fontWeight: 600,
-        color: '#112a46',
-        textAlign: 'center',
-        marginTop: '4px',
-        fontSize: '14px',
-    },
-    value: {
-        width: '100px',
-        flexShrink: 0,
-    },
-};
-
-// CSS for range input thumb - Sulu style with #112a46 color
-const rangeInputStyles = `
-    .sulu-slider-range-input {
-        position: relative;
-        display: block;
-    }
-    
-    .sulu-slider-range-input::-webkit-slider-runnable-track {
-        width: 100%;
-        height: 2px;
-        background: #d8d8d8;
-        border-radius: 1px;
-    }
-    
-    .sulu-slider-range-input::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 16px;
-        height: 16px;
-        margin-top: -7px;
-        background: #112a46;
-        cursor: pointer;
-        border-radius: 50%;
-        border: 2px solid #fff;
-        box-shadow: 0 1px 3px rgba(17, 42, 70, 0.3);
-        transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    
-    .sulu-slider-range-input::-webkit-slider-thumb:hover {
-        background: #0d1f33;
-        box-shadow: 0 2px 4px rgba(17, 42, 70, 0.4);
-    }
-    
-    .sulu-slider-range-input::-webkit-slider-thumb:active {
-        background: #081426;
-        box-shadow: 0 1px 2px rgba(17, 42, 70, 0.5);
-    }
-    
-    .sulu-slider-range-input::-moz-range-track {
-        width: 100%;
-        height: 2px;
-        background: #d8d8d8;
-        border-radius: 1px;
-        border: none;
-    }
-    
-    .sulu-slider-range-input::-moz-range-thumb {
-        width: 16px;
-        height: 16px;
-        background: #112a46;
-        cursor: pointer;
-        border-radius: 50%;
-        border: 2px solid #fff;
-        box-shadow: 0 1px 3px rgba(17, 42, 70, 0.3);
-        transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    
-    .sulu-slider-range-input::-moz-range-thumb:hover {
-        background: #0d1f33;
-        box-shadow: 0 2px 4px rgba(17, 42, 70, 0.4);
-    }
-    
-    .sulu-slider-range-input::-moz-range-thumb:active {
-        background: #081426;
-        box-shadow: 0 1px 2px rgba(17, 42, 70, 0.5);
-    }
-    
-    .sulu-slider-range-input::-moz-focus-outer {
-        border: 0;
-    }
-`;
+import sliderRangeStyles from './SliderRange.scss';
 
 @observer
 class SliderRange extends React.Component<FieldTypeProps<number>> {
-    componentDidMount() {
-        if (!document.getElementById('sulu-slider-range-styles')) {
-            const styleTag = document.createElement('style');
-            styleTag.id = 'sulu-slider-range-styles';
-            styleTag.textContent = rangeInputStyles;
-            document.head.appendChild(styleTag);
-        }
-    }
 
     handleSliderChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
         const {onChange} = this.props;
@@ -198,7 +35,8 @@ class SliderRange extends React.Component<FieldTypeProps<number>> {
         // The actual slider track is from 8px to calc(100% - 8px)
         // This means the usable width is (100% - 16px)
         // Position should be: 8px + (percentage of usable width)
-        return `calc(8px + ${percentage}% * (100% - 16px) / 100%)`;
+        return `calc(16px + ${percentage}% * (100% - 32px) / 100%)`;
+
     };
 
     render() {
@@ -228,13 +66,12 @@ class SliderRange extends React.Component<FieldTypeProps<number>> {
         const maxLength = String(max).length;
 
         return (
-            <div style={styles.container}>
-                <div style={styles.wrapper}>
-                    <div style={styles.sliderContainer}>
+            <div className={sliderRangeStyles.container}>
+                <div className={sliderRangeStyles.wrapper}>
+                    <div className={sliderRangeStyles.sliderContainer}>
                         <input
                             type="range"
-                            className="sulu-slider-range-input"
-                            style={styles.input}
+                            className={`${sliderRangeStyles.rangeInput} ${sliderRangeStyles.input}`}
                             min={min}
                             max={max}
                             step={step}
@@ -247,9 +84,10 @@ class SliderRange extends React.Component<FieldTypeProps<number>> {
                         {/* Floating label above thumb */}
                         {displayMode === 'floating' && (
                             <div
+                                className={sliderRangeStyles.labelCurrentFloating}
                                 style={{
-                                    ...styles.labelCurrentFloating,
                                     left: currentPosition,
+                                    transform: 'translateX(-50%)',
                                 }}
                             >
                                 {currentValue}
@@ -258,18 +96,17 @@ class SliderRange extends React.Component<FieldTypeProps<number>> {
 
                         {/* Labels below slider */}
                         {showLabels && (
-                            <div style={styles.labels}>
+                            <div className={sliderRangeStyles.labels}>
                                 {/* Min label */}
-                                <span style={{...styles.label, ...styles.labelMin}}>
+                                <span className={`${sliderRangeStyles.label} ${sliderRangeStyles.labelMin}`}>
                                     {min}
                                 </span>
 
                                 {/* Current value inline with min/max */}
                                 {displayMode === 'inline' && (
                                     <span
+                                        className={`${sliderRangeStyles.label} ${sliderRangeStyles.labelCurrent}`}
                                         style={{
-                                            ...styles.label,
-                                            ...styles.labelCurrent,
                                             left: currentPosition,
                                         }}
                                     >
@@ -278,7 +115,7 @@ class SliderRange extends React.Component<FieldTypeProps<number>> {
                                 )}
 
                                 {/* Max label */}
-                                <span style={{...styles.label, ...styles.labelMax}}>
+                                <span className={`${sliderRangeStyles.label} ${sliderRangeStyles.labelMax}`}>
                                     {max}
                                 </span>
                             </div>
@@ -286,7 +123,7 @@ class SliderRange extends React.Component<FieldTypeProps<number>> {
 
                         {/* Current value centered below everything */}
                         {displayMode === 'below' && (
-                            <div style={styles.labelCurrentBelow}>
+                            <div className={sliderRangeStyles.labelCurrentBelow}>
                                 {currentValue}
                             </div>
                         )}
@@ -295,7 +132,7 @@ class SliderRange extends React.Component<FieldTypeProps<number>> {
 
                 {/* Input field (only in 'input' mode) */}
                 {showInput && (
-                    <div style={styles.value}>
+                    <div className={sliderRangeStyles.value}>
                         <Input
                             id={dataPath}
                             type="number"
