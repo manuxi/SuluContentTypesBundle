@@ -93,7 +93,7 @@ class ColorSelect extends SimpleContentType
 
                     $values[] = [
                         'name' => $name,
-                        'value' => $itemValue, // Store full value with color
+                        'value' => $name, // Store full value with color
                         'color' => $color,
                         'title' => $title,
                     ];

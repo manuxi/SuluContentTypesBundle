@@ -43,7 +43,7 @@ class ColorSelect extends React.Component<FieldTypeProps<string>> {
             const displayName = item.title || name.charAt(0).toUpperCase() + name.slice(1);
 
             return {
-                value: itemValue,
+                value: name,
                 label: (
                     <div className={colorSelectStyles.colorSelectOption}>
                         <Icon
