@@ -86,7 +86,7 @@ Füge zum Hauptprojekt's `assets/admin/package.json` hinzu:
 
 ### 4. Import im Hauptprojekt
 
-Füge zum Hauptprojekt's `assets/admin/index.js` hinzu:
+Füge zum Hauptprojekt's `assets/admin/app.js` hinzu:
 
 ```javascript
 import 'sulu-content-types-bundle';
@@ -322,22 +322,8 @@ SuluContentTypesBundle/
 │       ├── config/services.xml    # Service-Definitionen
 │       ├── js/                    # React-Komponenten
 │       └── package.json           # JS-Abhängigkeiten
-├── docs/                          # Öffentliche Dokumentation
-└── docs/dev/                      # Entwickler-Docs (nicht veröffentlicht)
+└──docs/                          # Öffentliche Dokumentation
 ```
-
-### Tests ausführen
-
-```bash
-composer test
-```
-
-### Code-Style
-
-```bash
-composer cs-fix
-```
-
 ---
 
 ## Kompatibilität
@@ -346,21 +332,6 @@ composer cs-fix
 - **PHP:** ^8.1
 - **Symfony:** ^5.4 || ^6.0 || ^7.0
 - **React:** ^17.0.0 || ^18.0.0
-
-### JavaScript/Flow Types
-
-Die JavaScript-Komponenten verwenden Flow-Type-Annotationen (`// @flow`). Dies ist optional für die Entwicklung.
-
-Siehe [docs/PHPSTORM_FLOW_FIX.md](docs/PHPSTORM_FLOW_FIX.md) bei IDE-Warnungen.
-
----
-
-## Zukunftskompatibilität
-
-Dieses Bundle ist mit Blick auf Sulu 3.x-Kompatibilität entwickelt:
-- Verwendet SimpleContentType ohne PHPCR-Abhängigkeiten
-- Keine direkten PHPCR write/read Methoden
-- Zukunftssichere Architektur
 
 ---
 
@@ -396,18 +367,6 @@ Erstellt und gepflegt von [Manuxi](https://github.com/manuxi)
 
 - **Issues:** [GitHub Issues](https://github.com/manuxi/SuluContentTypesBundle/issues)
 - **Diskussionen:** [Sulu Slack](https://sulu.io/en/community)
-
----
-
-## Roadmap
-
-Geplante Features für zukünftige Versionen:
-- IconSelect (FontAwesome, Material Icons)
-- PercentageSlider (mit %-Anzeige)
-- CurrencyInput (mit Währungssymbolen)
-- ColorPicker (vollständiger Color-Picker)
-- DateRangePicker
-- TimeRangePicker
 
 ---
 

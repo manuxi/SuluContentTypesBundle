@@ -323,22 +323,8 @@ SuluContentTypesBundle/
 │       ├── config/services.xml    # Service definitions
 │       ├── js/                    # React components
 │       └── package.json           # JS dependencies
-├── docs/                          # Public documentation
-└── docs/dev/                      # Developer-only docs (not published)
+└──docs/                          # Public documentation
 ```
-
-### Running Tests
-
-```bash
-composer test
-```
-
-### Code Style
-
-```bash
-composer cs-fix
-```
-
 ---
 
 ## Compatibility
@@ -347,12 +333,6 @@ composer cs-fix
 - **PHP:** ^8.1
 - **Symfony:** ^5.4 || ^6.0 || ^7.0
 - **React:** ^17.0.0 || ^18.0.0
-
-### JavaScript/Flow Types
-
-The JavaScript components use Flow type annotations (`// @flow`). This is optional for development.
-
-See [docs/PHPSTORM_FLOW_FIX.md](docs/PHPSTORM_FLOW_FIX.md) if you get IDE warnings.
 
 ---
 
@@ -368,8 +348,6 @@ This bundle is designed with Sulu 3.x compatibility in mind:
 ## Documentation
 
 - [Installation Guide](docs/INSTALLATION.md) - Step-by-step installation
-- [Flow Types](docs/FLOW_TYPES.md) - Understanding Flow type annotations
-- [PhpStorm Fix](docs/PHPSTORM_FLOW_FIX.md) - Fixing IDE warnings
 - [Example Template](docs/example_template.xml) - Complete XML examples
 - [Example Twig](docs/example.html.twig) - Twig usage examples
 
@@ -408,7 +386,6 @@ Planned features for future versions:
 - IconSelect (FontAwesome, Material Icons)
 - PercentageSlider (with % display)
 - CurrencyInput (with currency symbols)
-- ColorPicker (full color picker)
 - DateRangePicker
 - TimeRangePicker
 
