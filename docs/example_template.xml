@@ -77,6 +77,48 @@
             </params>
         </property>
 
+        <!-- ============================================================ -->
+        <!-- STANDARD MODE: Stores "primary:#0d6efd" (key:color format)   -->
+        <!-- Use Case: Bootstrap classes, button colors, etc.             -->
+        <!-- ============================================================ -->
+        <property name="button_color" type="color_select" mandatory="false">
+            <meta>
+                <title lang="de">Button-Farbe (mit Farbe)</title>
+                <title lang="en">Button Color (with color)</title>
+            </meta>
+            <params>
+                <param name="values"
+                       type="expression"
+                       value="service('sulu_content_types.color_palette_provider').getValues('bootstrap')"
+                />
+                <param name="default_value"
+                       type="expression"
+                       value="service('sulu_content_types.color_palette_provider').getDefaultValue('bootstrap')"
+                />
+            </params>
+        </property>
+
+        <!-- ============================================================ -->
+        <!-- CUSTOM MODE: Stores "primary:#008800" (key:color format)     -->
+        <!-- Use Case: classes, colors, etc.                              -->
+        <!-- ============================================================ -->
+        <property name="button_color" type="color_select" mandatory="false">
+            <meta>
+                <title lang="de">Button-Farbe (mit Farbe)</title>
+                <title lang="en">Button Color (with color)</title>
+            </meta>
+            <params>
+                <param name="values"
+                       type="expression"
+                       value="service('sulu_content_types.color_palette_provider').getValues('bootstrap')"
+                />
+                <param name="default_value"
+                       type="expression"
+                       value="service('sulu_content_types.color_palette_provider').getDefaultValue('bootstrap')"
+                />
+            </params>
+        </property>
+
         <!-- SliderRange Example: Banner Rotation (Classic with Input) -->
         <property name="banner_rotation_speed" type="slider_range" mandatory="false">
             <meta>

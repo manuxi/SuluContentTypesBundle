@@ -6,17 +6,6 @@ import type {FieldTypeProps} from 'sulu-admin-bundle/types';
 import {toJS} from 'mobx';
 import colorSelectStyles from './ColorSelect.scss';
 
-const stylesx = {
-    colorSelectOption: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-    },
-    colorSelectLabel: {
-        flex: 1,
-    },
-};
-
 @observer
 class ColorSelect extends React.Component<FieldTypeProps<string>> {
     handleChange = (value: string | number) => {
